@@ -27,19 +27,16 @@ export const Warehouse: React.FC = () => {
     );
 
     callback.current.up[1] = (res: HandleUpFnProps) => {
-        const arr = list ? [...list] : [];
+        const arr = (comms as unknown as ConfigProps).config.options.map((item) => ({
+            code: item.code,
+            content: item.content,
+        }));
         const n = arr.findIndex((item) => item.code === res.code);
 
         const status = hasStorageEl(res.x, res.y);
 
         if (status && n >= 0) {
             arr.splice(n, 1);
-            setList([...arr]);
-        } else if (n < 0 && !status) {
-            arr.push({
-                code: res.code,
-                content: res.content,
-            });
             setList([...arr]);
         }
     };

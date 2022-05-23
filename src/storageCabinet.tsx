@@ -7,7 +7,7 @@ import { comms } from ".";
 /* <------------------------------------ **** INTERFACE START **** ------------------------------------ */
 /** This section will include all the interface for this tsx file */
 
-import { ConfigProps, hasStorageEl, OptionProps } from "./unit";
+import { hasStorageEl, OptionProps } from "./unit";
 import { Product } from "./product";
 import { ScrollComponent } from "./Scroll";
 
@@ -19,7 +19,7 @@ export const StorageCabinet: React.FC = () => {
 
     const { isMobile, callback } = useMContext();
 
-    const [list, setList] = useState<Array<OptionProps>>();
+    const [value, setValue] = useState<OptionProps>();
 
     const [active, setActive] = useState(false);
 
@@ -29,21 +29,8 @@ export const StorageCabinet: React.FC = () => {
     /* <------------------------------------ **** PARAMETER START **** ------------------------------------ */
     /************* This section will include this component parameter *************/
     useEffect(() => {
-        const data: Record<string, boolean> = {};
-        const listData: Record<string, true> = {};
-
-        const arr = list ?? [];
-        for (let i = 0; i < arr.length; i++) {
-            listData[arr[i].code] = true;
-        }
-
-        const optionsData = (comms as unknown as ConfigProps).config.options;
-        for (let i = 0; i < optionsData.length; i++) {
-            const item = optionsData[i];
-            data[item.code] = listData[item.code];
-        }
-        comms.state = data;
-    }, [list]);
+        comms.state = value?.code;
+    }, [value]);
 
     useEffect(() => {
         return () => {
@@ -62,20 +49,16 @@ export const StorageCabinet: React.FC = () => {
     callback.current.up[0] = (res: HandleUpFnProps) => {
         timerOut.current && window.clearTimeout(timerOut.current);
 
-        const arr = list ? [...list] : [];
-        const n = arr.findIndex((item) => item.code === res.code);
-
         const status = hasStorageEl(res.x, res.y);
-        if (status && n < 0) {
-            arr.push({
+        if (status && (!value || res.code !== value.code)) {
+            setValue({
                 code: res.code,
                 content: res.content,
             });
-            setList([...arr]);
-        } else if (n >= 0 && !status) {
-            arr.splice(n, 1);
-            setList([...arr]);
+        } else if (!status && res.code === value?.code) {
+            setValue(undefined);
         }
+
         setActive(false);
     };
 
@@ -85,10 +68,10 @@ export const StorageCabinet: React.FC = () => {
 
     const content = (
         <div className="storageCabinet_main">
-            <div className="placeholder" style={list?.length ? { display: "none" } : {}}>
+            <div className="placeholder" style={value ? { display: "none" } : {}}>
                 请将答案选项放置在这里
             </div>
-            <Product list={list ?? []} />
+            <Product list={value ? [value] : []} />
         </div>
     );
 
