@@ -37,8 +37,8 @@ export const Warehouse: React.FC = () => {
 
         if (status && n >= 0) {
             arr.splice(n, 1);
-            setList([...arr]);
         }
+        setList([...arr]);
     };
     return (
         <div className="warehouse_wrap">
