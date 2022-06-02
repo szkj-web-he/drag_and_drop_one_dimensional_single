@@ -55,13 +55,19 @@ export const Product: React.FC<ProductProps> = ({ list }) => {
         if (!canMove.current) return;
         let x = 0;
         let y = 0;
+        let clientX = 0;
+        let clientY = 0;
         if (e instanceof MouseEvent) {
             x = e.pageX;
             y = e.pageY;
+            clientX = e.clientX;
+            clientY = e.clientY;
         } else {
             const position = e.changedTouches[0];
             x = position.pageX;
             y = position.pageY;
+            clientX = position.clientX;
+            clientY = position.clientY;
         }
         const moveX = x - point.current.pageX;
         const moveY = y - point.current.pageY;
@@ -70,7 +76,7 @@ export const Product: React.FC<ProductProps> = ({ list }) => {
         point.current.y = moveY + point.current.y;
         point.current.pageX = x;
         point.current.pageY = y;
-        callback.current.move?.(x, y);
+        callback.current.move?.(clientX, clientY);
 
         setPosition({
             ...point.current,
@@ -79,10 +85,12 @@ export const Product: React.FC<ProductProps> = ({ list }) => {
 
     // 当鼠标 或者手 弹起时的通用事件
     const handleUp = () => {
+        const scrollData = getScrollValue();
+
         for (let i = 0; i < callback.current.up.length; i++) {
             callback.current.up[i]({
-                x: point.current.pageX,
-                y: point.current.pageY,
+                x: point.current.pageX - scrollData.x,
+                y: point.current.pageY - scrollData.y,
                 code: selectRef.current?.code ?? "",
                 content: selectRef.current?.content ?? "",
             });

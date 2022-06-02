@@ -17,7 +17,7 @@ export const StorageCabinet: React.FC = () => {
     /* <------------------------------------ **** STATE START **** ------------------------------------ */
     /************* This section will include this component HOOK function *************/
 
-    const { isMobile, callback } = useMContext();
+    const { isMobile, callback, valueRef } = useMContext();
 
     const [value, setValue] = useState<OptionProps>();
 
@@ -55,8 +55,13 @@ export const StorageCabinet: React.FC = () => {
                 code: res.code,
                 content: res.content,
             });
+            valueRef.current = {
+                code: res.code,
+                content: res.content,
+            };
         } else if (!status && res.code === value?.code) {
             setValue(undefined);
+            valueRef.current = undefined;
         }
 
         setActive(false);

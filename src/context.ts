@@ -19,6 +19,14 @@ interface ContextDataProps {
     isMobile: boolean;
 
     callback: React.MutableRefObject<CallbackProps>;
+
+    valueRef: React.MutableRefObject<
+        | {
+              code: string;
+              content: string;
+          }
+        | undefined
+    >;
 }
 
 const contextData = (): ContextDataProps => ({
@@ -29,6 +37,7 @@ const contextData = (): ContextDataProps => ({
             up: [],
         },
     },
+    valueRef: { current: undefined },
 });
 
 export const Context = createContext(contextData());

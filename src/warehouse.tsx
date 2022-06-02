@@ -3,42 +3,64 @@
 
 import React, { useState } from "react";
 import { Product } from "./product";
-import { ConfigProps, hasStorageEl } from "./unit";
+import { hasStorageEl } from "./unit";
 import { comms } from ".";
 import { HandleUpFnProps, useMContext } from "./context";
 import { ScrollComponent } from "./Scroll";
 /* <------------------------------------ **** DEPENDENCE IMPORT END **** ------------------------------------ */
 /* <------------------------------------ **** INTERFACE START **** ------------------------------------ */
 
-// const fruits = options.map(item => { const key = Object.keys(item)[0]; return item[key] });
-
 /** This section will include all the interface for this tsx file */
 
 /* <------------------------------------ **** INTERFACE END **** ------------------------------------ */
 /* <------------------------------------ **** FUNCTION COMPONENT START **** ------------------------------------ */
 export const Warehouse: React.FC = () => {
-    const { isMobile, callback } = useMContext();
+    const { isMobile, callback, valueRef } = useMContext();
 
     const [list, setList] = useState(
-        (comms as unknown as ConfigProps).config.options.map((item) => ({
+        (comms?.config.options ?? []).map((item) => ({
             code: item.code,
             content: item.content,
         })),
     );
 
     callback.current.up[1] = (res: HandleUpFnProps) => {
-        const arr = (comms as unknown as ConfigProps).config.options.map((item) => ({
+        const arr = (comms?.config.options ?? []).map((item) => ({
             code: item.code,
             content: item.content,
         }));
-        const n = arr.findIndex((item) => item.code === res.code);
+
+        const _arr: {
+            code: string;
+            content: string;
+        }[] = [];
 
         const status = hasStorageEl(res.x, res.y);
-
-        if (status && n >= 0) {
-            arr.splice(n, 1);
+        let n: null | number = null;
+        for (let i = 0; i < arr.length; ) {
+            const item = arr[i];
+            if (item.code === res.code && status) {
+                n = i;
+                i = arr.length;
+            } else {
+                ++i;
+            }
         }
-        setList([...arr]);
+
+        for (let i = 0; i < arr.length; ) {
+            const item = arr[i];
+            if (
+                (!valueRef.current || item.code !== valueRef.current.code) &&
+                (typeof n !== "number" || i !== n)
+            ) {
+                _arr.push({
+                    ...item,
+                });
+            }
+            ++i;
+        }
+
+        setList([..._arr]);
     };
     return (
         <div className="warehouse_wrap">
@@ -57,7 +79,7 @@ export const Warehouse: React.FC = () => {
                             className="placeholder"
                             style={list?.length ? { display: "none" } : {}}
                         >
-                            请将答案选项放置在这里
+                            暂无可拖拽的选项
                         </div>
                         <Product list={list} />
                     </div>
