@@ -129,6 +129,9 @@ body {
         position: relative;
         border-color: transparent;
         overflow: hidden;
+        * {
+            visibility: hidden;
+        }
         &::after {
             content: "";
             overflow: hidden;

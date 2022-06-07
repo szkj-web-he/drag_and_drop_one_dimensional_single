@@ -2,12 +2,13 @@ import "./font.scss";
 import "./style.scss";
 import "./elementsFromPointPolyfill.ts";
 import { Warehouse } from "./warehouse";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { StorageCabinet } from "./storageCabinet";
-import { CallbackProps, Context } from "./context";
+import { Context, ValueChangeFnProps } from "./context";
 import { isMobile } from "./isMobile";
 
 import { PluginComms, ConfigYML } from "@possie-engine/dr-plugin-sdk";
+import { hasStorageEl, OptionProps } from "./unit";
 
 export const comms = new PluginComms({
     defaultConfig: new ConfigYML(),
@@ -27,11 +28,18 @@ const Main: React.FC = () => {
 
     const [mobileStatus, setMobileStatus] = useState(isMobile);
 
-    const callback = useRef<CallbackProps>({
-        up: [],
-    });
+    const moveCallBack = useRef<(x: number, y: number) => void>(() => undefined);
 
-    const valueRef = useRef<{ code: string; content: string }>();
+    const selectedValueRef = useRef<OptionProps>();
+    const [selectedValue, setSelectedValue] = useState(
+        selectedValueRef.current ? { ...selectedValueRef.current } : undefined,
+    );
+
+    const noSelectedValues = useMemo(() => {
+        const arr = comms.config.options ?? [];
+        return arr.filter((item) => item.code !== selectedValue?.code);
+    }, [selectedValue]);
+
     /* <------------------------------------ **** STATE END **** ------------------------------------ */
     /* <------------------------------------ **** PARAMETER START **** ------------------------------------ */
     /************* This section will include this component parameter *************/
@@ -49,6 +57,19 @@ const Main: React.FC = () => {
     /* <------------------------------------ **** PARAMETER END **** ------------------------------------ */
     /* <------------------------------------ **** FUNCTION START **** ------------------------------------ */
     /************* This section will include this component general function *************/
+
+    const valueChangeCallback = useCallback((res: ValueChangeFnProps) => {
+        selectedValueRef.current = undefined;
+        const status = hasStorageEl(res.x, res.y);
+        selectedValueRef.current = status
+            ? {
+                  code: res.data.code,
+                  content: res.data.content,
+              }
+            : undefined;
+        setSelectedValue(selectedValueRef.current ? { ...selectedValueRef.current } : undefined);
+    }, []);
+
     /* <------------------------------------ **** FUNCTION END **** ------------------------------------ */
     return (
         <div className="wrapper">
@@ -68,14 +89,14 @@ const Main: React.FC = () => {
             </div>
             <Context.Provider
                 value={{
-                    callback,
                     isMobile: mobileStatus,
-                    valueRef,
+                    valueChangeCallback,
+                    moveCallBack,
                 }}
             >
-                <Warehouse />
+                <Warehouse list={noSelectedValues} />
                 <div className="hr" />
-                <StorageCabinet />
+                <StorageCabinet list={selectedValue ? [selectedValue] : []} />
             </Context.Provider>
         </div>
     );

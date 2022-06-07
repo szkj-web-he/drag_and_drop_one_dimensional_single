@@ -1,4 +1,5 @@
 import { createContext, useContext } from "react";
+import { OptionProps } from "./unit";
 
 export interface HandleUpFnProps {
     x: number;
@@ -15,29 +16,21 @@ export interface CallbackProps {
     move?: HandleMoveFn;
 }
 
-interface ContextDataProps {
-    isMobile: boolean;
-
-    callback: React.MutableRefObject<CallbackProps>;
-
-    valueRef: React.MutableRefObject<
-        | {
-              code: string;
-              content: string;
-          }
-        | undefined
-    >;
+export interface ValueChangeFnProps {
+    x: number;
+    y: number;
+    data: OptionProps;
 }
 
+interface ContextDataProps {
+    isMobile: boolean;
+    moveCallBack: React.MutableRefObject<(x: number, y: number) => void>;
+    valueChangeCallback: (res: ValueChangeFnProps) => void;
+}
 const contextData = (): ContextDataProps => ({
     isMobile: false,
-
-    callback: {
-        current: {
-            up: [],
-        },
-    },
-    valueRef: { current: undefined },
+    moveCallBack: { current: () => undefined },
+    valueChangeCallback: () => undefined,
 });
 
 export const Context = createContext(contextData());
