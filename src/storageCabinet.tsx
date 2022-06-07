@@ -17,7 +17,7 @@ export const StorageCabinet: React.FC<WarehouseProps> = ({ list }) => {
     /* <------------------------------------ **** STATE START **** ------------------------------------ */
     /************* This section will include this component HOOK function *************/
 
-    const { isMobile, moveCallBack } = useMContext();
+    const { isMobile, moveCallBack, upCallBack } = useMContext();
 
     const [active, setActive] = useState(false);
 
@@ -34,10 +34,14 @@ export const StorageCabinet: React.FC<WarehouseProps> = ({ list }) => {
                 setActive(hasStorageEl(x, y));
             }, 1);
         };
+        upCallBack.current = () => {
+            timer && window.clearTimeout(timer);
+            setActive(false);
+        };
         return () => {
             timer && window.clearTimeout(timer);
         };
-    }, [moveCallBack]);
+    }, [moveCallBack, upCallBack]);
 
     /* <------------------------------------ **** PARAMETER END **** ------------------------------------ */
     /* <------------------------------------ **** FUNCTION START **** ------------------------------------ */

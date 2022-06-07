@@ -19,7 +19,7 @@ export const Product: React.FC<ProductProps> = ({ list }) => {
     /* <------------------------------------ **** STATE START **** ------------------------------------ */
     /************* This section will include this component HOOK function *************/
 
-    const { isMobile, valueChangeCallback } = useMContext();
+    const { isMobile, valueChangeCallback, moveCallBack, upCallBack } = useMContext();
 
     const selectedFn = useRef<typeof document.onselectstart>(null);
 
@@ -59,10 +59,12 @@ export const Product: React.FC<ProductProps> = ({ list }) => {
         if (e instanceof MouseEvent) {
             x = e.pageX;
             y = e.pageY;
+            moveCallBack.current(e.clientX, e.clientY);
         } else {
             const position = e.changedTouches[0];
             x = position.pageX;
             y = position.pageY;
+            moveCallBack.current(position.clientX, position.clientY);
         }
         const moveX = x - point.current.pageX;
         const moveY = y - point.current.pageY;
@@ -82,6 +84,7 @@ export const Product: React.FC<ProductProps> = ({ list }) => {
         if (!selectRef.current) {
             return;
         }
+        upCallBack.current();
         document.onselectstart = selectedFn.current;
         point.current = {
             x: 0,

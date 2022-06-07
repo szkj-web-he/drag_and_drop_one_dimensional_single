@@ -29,6 +29,7 @@ const Main: React.FC = () => {
     const [mobileStatus, setMobileStatus] = useState(isMobile);
 
     const moveCallBack = useRef<(x: number, y: number) => void>(() => undefined);
+    const upCallBack = useRef<() => void>(() => undefined);
 
     const selectedValueRef = useRef<OptionProps>();
     const [selectedValue, setSelectedValue] = useState(
@@ -91,6 +92,7 @@ const Main: React.FC = () => {
                 value={{
                     isMobile: mobileStatus,
                     valueChangeCallback,
+                    upCallBack,
                     moveCallBack,
                 }}
             >
