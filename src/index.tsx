@@ -60,14 +60,16 @@ const Main: React.FC = () => {
     /************* This section will include this component general function *************/
 
     const valueChangeCallback = useCallback((res: ValueChangeFnProps) => {
-        selectedValueRef.current = undefined;
         const status = hasStorageEl(res.x, res.y);
-        selectedValueRef.current = status
-            ? {
-                  code: res.data.code,
-                  content: res.data.content,
-              }
-            : undefined;
+        if (status) {
+            selectedValueRef.current = {
+                code: res.data.code,
+                content: res.data.content,
+            };
+        } else if (res.from === "storageCabinet") {
+            selectedValueRef.current = undefined;
+        }
+
         setSelectedValue(selectedValueRef.current ? { ...selectedValueRef.current } : undefined);
     }, []);
 

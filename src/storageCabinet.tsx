@@ -11,6 +11,9 @@ import { Product } from "./product";
 import { ScrollComponent } from "./Scroll";
 import { WarehouseProps } from "./warehouse";
 
+import OuterFrame from "./outerFrame";
+import InnerFrame from "./innerFrame";
+import flower from "./Assets/svg/lotus_flower.svg";
 /* <------------------------------------ **** INTERFACE END **** ------------------------------------ */
 /* <------------------------------------ **** FUNCTION COMPONENT START **** ------------------------------------ */
 export const StorageCabinet: React.FC<WarehouseProps> = ({ list }) => {
@@ -52,18 +55,22 @@ export const StorageCabinet: React.FC<WarehouseProps> = ({ list }) => {
             <div className="placeholder" style={arr.length ? { display: "none" } : {}}>
                 请将答案选项放置在这里
             </div>
-            <Product list={arr} />
+            <Product list={arr} from="storageCabinet" />
         </div>
     );
 
     /* <------------------------------------ **** FUNCTION END **** ------------------------------------ */
     return (
         <div className="storageCabinet_wrap">
+            <OuterFrame />
+            <InnerFrame active={active} />
             <div
-                className={`storageCabinet_container${isMobile ? " scrollBody" : ""}${
-                    active ? " active" : ""
-                }`}
-            >
+                className="storageCabinet_bgFlower"
+                dangerouslySetInnerHTML={{
+                    __html: flower,
+                }}
+            />
+            <div className={`storageCabinet_container${isMobile ? " scrollBody" : ""}`}>
                 {isMobile ? (
                     content
                 ) : (

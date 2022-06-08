@@ -26,7 +26,7 @@ export const Warehouse: React.FC<WarehouseProps> = ({ list }) => {
             <div className="placeholder" style={arr.length ? { display: "none" } : {}}>
                 暂无可拖拽的选项
             </div>
-            <Product list={arr} />
+            <Product list={arr} from="warehouse" />
         </div>
     );
     return (

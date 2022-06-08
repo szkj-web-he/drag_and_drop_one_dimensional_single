@@ -5,6 +5,7 @@ export interface ValueChangeFnProps {
     x: number;
     y: number;
     data: OptionProps;
+    from: "warehouse" | "storageCabinet";
 }
 
 interface ContextDataProps {

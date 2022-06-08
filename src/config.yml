@@ -1,7 +1,7 @@
 # The question text can be modified by the survey owner.
-question: "请将你最喜欢的东西放在框内"
+question: "请将喜欢的东西放进框内"
 # The instructions to the question can be modified by the survey owner. It's recommended that the existing instructions are included in the customised instructions.
-instruction: "只可放一个"
+instruction: "可放一个"
 # For the purposes of reproducing a bug
 options:
     [

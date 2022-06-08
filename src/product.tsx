@@ -12,10 +12,11 @@ import { OptionProps, PointProps } from "./unit";
 /** This section will include all the interface for this tsx file */
 export interface ProductProps {
     list: Array<OptionProps>;
+    from: "warehouse" | "storageCabinet";
 }
 /* <------------------------------------ **** INTERFACE END **** ------------------------------------ */
 /* <------------------------------------ **** FUNCTION COMPONENT START **** ------------------------------------ */
-export const Product: React.FC<ProductProps> = ({ list }) => {
+export const Product: React.FC<ProductProps> = ({ list, from }) => {
     /* <------------------------------------ **** STATE START **** ------------------------------------ */
     /************* This section will include this component HOOK function *************/
 
@@ -101,6 +102,7 @@ export const Product: React.FC<ProductProps> = ({ list }) => {
                 code: selectRef.current.code,
                 content: selectRef.current.content,
             },
+            from,
         });
         setPosition(undefined);
         selectRef.current = undefined;
