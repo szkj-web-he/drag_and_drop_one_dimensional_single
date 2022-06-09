@@ -47,6 +47,10 @@ const Main: React.FC = () => {
     /************* This section will include this component parameter *************/
 
     useEffect(() => {
+        comms.state = selectedValue?.code ?? null;
+    }, [selectedValue]);
+
+    useEffect(() => {
         const fn = () => {
             setMobileStatus(isMobile);
         };
