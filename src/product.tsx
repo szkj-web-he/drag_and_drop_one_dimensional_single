@@ -6,8 +6,8 @@ import { stopSelect } from "./Scroll/Unit/noSelected";
 import { useMContext } from "./context";
 import { getScrollValue } from "./getScrollValue";
 import { OptionProps, PointProps } from "./unit";
-import spider from "./Assets/svg/spider.svg";
-import pumpkin from "./Assets/svg/pumpkin.svg";
+import bg from "./Assets/img/icon_bg.png";
+import icon from "./Assets/img/icon_bottom.png";
 
 /* <------------------------------------ **** DEPENDENCE IMPORT END **** ------------------------------------ */
 /* <------------------------------------ **** INTERFACE START **** ------------------------------------ */
@@ -206,21 +206,10 @@ export const Product: React.FC<ProductProps> = ({ list, from }) => {
                                   },
                               })}
                     >
-                        <div className="itemBg1" />
-                        <div className="itemBg2" />
-                        <div className="itemBg3" />
-                        <div
-                            className="itemBg4"
-                            dangerouslySetInnerHTML={{
-                                __html: pumpkin,
-                            }}
-                        />
-                        <div
-                            className="itemBg5"
-                            dangerouslySetInnerHTML={{
-                                __html: spider,
-                            }}
-                        />
+                        <div className="itemBg">
+                            <img src={bg} alt="" className="itemBg_icon" />
+                        </div>
+                        <img src={icon} alt="" className="itemIcon" />
 
                         <span
                             className="itemContent"
@@ -243,21 +232,10 @@ export const Product: React.FC<ProductProps> = ({ list, from }) => {
                             height: `${position.height}px`,
                         }}
                     >
-                        <div className="itemBg1" />
-                        <div className="itemBg2" />
-                        <div className="itemBg3" />
-                        <div
-                            className="itemBg4"
-                            dangerouslySetInnerHTML={{
-                                __html: pumpkin,
-                            }}
-                        />
-                        <div
-                            className="itemBg5"
-                            dangerouslySetInnerHTML={{
-                                __html: spider,
-                            }}
-                        />
+                        <div className="itemBg">
+                            <img src={bg} alt="" className="itemBg_icon" />
+                        </div>
+                        <img src={icon} alt="" className="itemIcon" />
 
                         <span
                             className="itemContent"
