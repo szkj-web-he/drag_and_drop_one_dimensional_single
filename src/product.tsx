@@ -184,6 +184,26 @@ export const Product: React.FC<ProductProps> = ({ list, from }) => {
         });
     };
 
+    const content = (
+        <>
+            <div className="itemBg1" />
+            <div className="itemBg2" />
+            <div className="itemBg3" />
+            <div
+                className="itemBg4"
+                dangerouslySetInnerHTML={{
+                    __html: pumpkin,
+                }}
+            />
+            <div
+                className="itemBg5"
+                dangerouslySetInnerHTML={{
+                    __html: spider,
+                }}
+            />
+        </>
+    );
+
     /* <------------------------------------ **** FUNCTION END **** ------------------------------------ */
     return (
         <>
@@ -206,22 +226,7 @@ export const Product: React.FC<ProductProps> = ({ list, from }) => {
                                   },
                               })}
                     >
-                        <div className="itemBg1" />
-                        <div className="itemBg2" />
-                        <div className="itemBg3" />
-                        <div
-                            className="itemBg4"
-                            dangerouslySetInnerHTML={{
-                                __html: pumpkin,
-                            }}
-                        />
-                        <div
-                            className="itemBg5"
-                            dangerouslySetInnerHTML={{
-                                __html: spider,
-                            }}
-                        />
-
+                        {content}
                         <span
                             className="itemContent"
                             dangerouslySetInnerHTML={{
@@ -243,22 +248,7 @@ export const Product: React.FC<ProductProps> = ({ list, from }) => {
                             height: `${position.height}px`,
                         }}
                     >
-                        <div className="itemBg1" />
-                        <div className="itemBg2" />
-                        <div className="itemBg3" />
-                        <div
-                            className="itemBg4"
-                            dangerouslySetInnerHTML={{
-                                __html: pumpkin,
-                            }}
-                        />
-                        <div
-                            className="itemBg5"
-                            dangerouslySetInnerHTML={{
-                                __html: spider,
-                            }}
-                        />
-
+                        {content}
                         <span
                             className="itemContent"
                             dangerouslySetInnerHTML={{

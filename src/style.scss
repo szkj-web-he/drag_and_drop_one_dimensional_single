@@ -32,20 +32,6 @@ body {
     overflow: auto;
 }
 
-.h1 {
-    font-family: $fontFamily;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 20px;
-    line-height: 30px;
-    letter-spacing: 0.2px;
-    color: $color;
-    .des {
-        font-weight: 400;
-        color: #757575;
-    }
-}
-
 .warehouse_wrap {
     margin-top: 32px;
     margin-bottom: 24px;
@@ -475,14 +461,6 @@ body {
     z-index: 7;
     background: #d6a317;
     border-radius: 20px;
-}
-
-.storageCabinet_bgFlower {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 62px;
-    height: 60px;
 }
 
 .storageCabinet_containerLeftIcon {
