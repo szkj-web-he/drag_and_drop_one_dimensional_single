@@ -9,7 +9,8 @@ import { isMobile } from "./isMobile";
 
 import { PluginComms, ConfigYML } from "@possie-engine/dr-plugin-sdk";
 import { hasStorageEl, OptionProps } from "./unit";
-import hr from "./Assets/svg/hr.svg";
+import leftHr from "./Assets/svg/leftHr.svg";
+import rightHr from "./Assets/svg/rightHr.svg";
 
 export const comms = new PluginComms({
     defaultConfig: new ConfigYML(),
@@ -105,14 +106,18 @@ const Main: React.FC = () => {
             >
                 <Warehouse list={noSelectedValues} />
                 <div className="hr">
-                    <div className="hr_left" />
                     <div
-                        className="hr_split"
+                        className="hr_left"
                         dangerouslySetInnerHTML={{
-                            __html: hr,
+                            __html: leftHr,
                         }}
                     />
-                    <div className="hr_right" />
+                    <div
+                        className="hr_right"
+                        dangerouslySetInnerHTML={{
+                            __html: rightHr,
+                        }}
+                    />
                 </div>
                 <StorageCabinet list={selectedValue ? [selectedValue] : []} />
             </Context.Provider>

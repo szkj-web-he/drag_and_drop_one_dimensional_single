@@ -6,6 +6,8 @@ import { stopSelect } from "./Scroll/Unit/noSelected";
 import { useMContext } from "./context";
 import { getScrollValue } from "./getScrollValue";
 import { OptionProps, PointProps } from "./unit";
+import spider from "./Assets/svg/spider.svg";
+import pumpkin from "./Assets/svg/pumpkin.svg";
 
 /* <------------------------------------ **** DEPENDENCE IMPORT END **** ------------------------------------ */
 /* <------------------------------------ **** INTERFACE START **** ------------------------------------ */
@@ -203,10 +205,30 @@ export const Product: React.FC<ProductProps> = ({ list, from }) => {
                                       handleMouseDown(item, e);
                                   },
                               })}
-                        dangerouslySetInnerHTML={{
-                            __html: item.content,
-                        }}
-                    />
+                    >
+                        <div className="itemBg1" />
+                        <div className="itemBg2" />
+                        <div className="itemBg3" />
+                        <div
+                            className="itemBg4"
+                            dangerouslySetInnerHTML={{
+                                __html: pumpkin,
+                            }}
+                        />
+                        <div
+                            className="itemBg5"
+                            dangerouslySetInnerHTML={{
+                                __html: spider,
+                            }}
+                        />
+
+                        <span
+                            className="itemContent"
+                            dangerouslySetInnerHTML={{
+                                __html: item.content,
+                            }}
+                        />
+                    </div>
                 );
             })}
 
@@ -220,10 +242,30 @@ export const Product: React.FC<ProductProps> = ({ list, from }) => {
                             width: `${position.width}px`,
                             height: `${position.height}px`,
                         }}
-                        dangerouslySetInnerHTML={{
-                            __html: selectItem?.content ?? "",
-                        }}
-                    />,
+                    >
+                        <div className="itemBg1" />
+                        <div className="itemBg2" />
+                        <div className="itemBg3" />
+                        <div
+                            className="itemBg4"
+                            dangerouslySetInnerHTML={{
+                                __html: pumpkin,
+                            }}
+                        />
+                        <div
+                            className="itemBg5"
+                            dangerouslySetInnerHTML={{
+                                __html: spider,
+                            }}
+                        />
+
+                        <span
+                            className="itemContent"
+                            dangerouslySetInnerHTML={{
+                                __html: selectItem?.content ?? "",
+                            }}
+                        />
+                    </div>,
                     document.querySelector("body>div") ?? document.body,
                 )}
         </>
