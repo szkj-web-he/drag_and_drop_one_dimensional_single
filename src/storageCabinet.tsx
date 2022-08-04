@@ -11,9 +11,8 @@ import { Product } from "./product";
 import { ScrollComponent } from "./Scroll";
 import { WarehouseProps } from "./warehouse";
 
-import lt from "./Assets/img/icon_lt.png";
-import rb from "./Assets/img/icon_rb.png";
-
+import { comms } from "./index";
+import Frame from "./frame";
 /* <------------------------------------ **** INTERFACE END **** ------------------------------------ */
 /* <------------------------------------ **** FUNCTION COMPONENT START **** ------------------------------------ */
 export const StorageCabinet: React.FC<WarehouseProps> = ({ list }) => {
@@ -53,7 +52,7 @@ export const StorageCabinet: React.FC<WarehouseProps> = ({ list }) => {
     const content = (
         <div className="storageCabinet_main">
             <div className="placeholder" style={arr.length ? { display: "none" } : {}}>
-                请将答案选项放置在这里
+                {comms.config.optionsInstruction}
             </div>
             <Product list={arr} from="storageCabinet" />
         </div>
@@ -62,8 +61,8 @@ export const StorageCabinet: React.FC<WarehouseProps> = ({ list }) => {
     /* <------------------------------------ **** FUNCTION END **** ------------------------------------ */
     return (
         <div className="storageCabinet_wrap">
-            <img alt="" src={lt} className="storageCabinet_ltIcon" />
-            <img alt="" src={rb} className="storageCabinet_rbIcon" />
+            <Frame type="bottom" />
+            <div className="storageCabinet_top" />
 
             <div
                 className={`storageCabinet_container${isMobile ? " scrollBody" : ""}${

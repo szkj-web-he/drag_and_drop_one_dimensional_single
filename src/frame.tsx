@@ -1,64 +1,63 @@
 /* <------------------------------------ **** DEPENDENCE IMPORT START **** ------------------------------------ */
 /** This section will include all the necessary dependence for this tsx file */
-import React, { useEffect, useRef, useState } from "react";
-import { drawItemRoundRect } from "./unit";
+import React, { useState, useEffect } from "react";
+import { drawRoundRect } from "./unit";
+import { useRef } from "react";
 /* <------------------------------------ **** DEPENDENCE IMPORT END **** ------------------------------------ */
 /* <------------------------------------ **** INTERFACE START **** ------------------------------------ */
 /** This section will include all the interface for this tsx file */
-interface TempProps {
-    style?: React.CSSProperties;
-    className?: string;
-}
+
 /* <------------------------------------ **** INTERFACE END **** ------------------------------------ */
 /* <------------------------------------ **** FUNCTION COMPONENT START **** ------------------------------------ */
-const Temp: React.FC<TempProps> = ({ style, className }) => {
+const Temp: React.FC<{ type: "top" | "bottom" }> = ({ type }) => {
     /* <------------------------------------ **** STATE START **** ------------------------------------ */
     /************* This section will include this component HOOK function *************/
     const [el, setEl] = useState<HTMLCanvasElement | null>(null);
-
     const timer = useRef<number>();
-
     /* <------------------------------------ **** STATE END **** ------------------------------------ */
     /* <------------------------------------ **** PARAMETER START **** ------------------------------------ */
     /************* This section will include this component parameter *************/
     useEffect(() => {
         const fn = () => {
             timer.current && window.clearTimeout(timer.current);
-            timer.current = window.setTimeout(() => {
-                const node = el;
-                timer.current = undefined;
-                if (!node) {
-                    return;
-                }
 
-                drawItemRoundRect(node);
+            if (!el) {
+                return;
+            }
+
+            timer.current = window.setTimeout(() => {
+                drawRoundRect(el, type);
+                timer.current = undefined;
             });
         };
+        fn();
         window.addEventListener("resize", fn);
         return () => {
             window.removeEventListener("resize", fn);
             timer.current && window.clearTimeout(timer.current);
         };
-    }, [el]);
-
+    }, [el, type]);
     /* <------------------------------------ **** PARAMETER END **** ------------------------------------ */
     /* <------------------------------------ **** FUNCTION START **** ------------------------------------ */
     /************* This section will include this component general function *************/
     if (el) {
         timer.current && window.clearTimeout(timer.current);
         timer.current = window.setTimeout(() => {
+            drawRoundRect(el, type);
             timer.current = undefined;
-
-            drawItemRoundRect(el);
         });
     }
-
     /* <------------------------------------ **** FUNCTION END **** ------------------------------------ */
 
     return (
         <>
-            <canvas className={className} style={style} ref={(el) => setEl(el)} />
-            <div className="triangle" />
+            <div className="frame" />
+            <canvas
+                className="frameBorder"
+                ref={(el) => {
+                    setEl(el);
+                }}
+            />
         </>
     );
 };
