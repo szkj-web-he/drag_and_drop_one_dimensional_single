@@ -6,8 +6,7 @@ import { stopSelect } from "./Scroll/Unit/noSelected";
 import { useMContext } from "./context";
 import { getScrollValue } from "./getScrollValue";
 import { OptionProps, PointProps } from "./unit";
-import bg from "./Assets/img/icon_bg.png";
-import icon from "./Assets/img/icon_bottom.png";
+import Frame from "./itemFrame";
 
 /* <------------------------------------ **** DEPENDENCE IMPORT END **** ------------------------------------ */
 /* <------------------------------------ **** INTERFACE START **** ------------------------------------ */
@@ -183,7 +182,7 @@ export const Product: React.FC<ProductProps> = ({ list, from }) => {
             y: position.pageY,
         });
     };
-
+    const content = <Frame className={`itemBg`} />;
     /* <------------------------------------ **** FUNCTION END **** ------------------------------------ */
     return (
         <>
@@ -206,10 +205,7 @@ export const Product: React.FC<ProductProps> = ({ list, from }) => {
                                   },
                               })}
                     >
-                        <div className="itemBg">
-                            <img src={bg} alt="" className="itemBg_icon" />
-                        </div>
-                        <img src={icon} alt="" className="itemIcon" />
+                        {content}
 
                         <span
                             className="itemContent"
@@ -232,10 +228,7 @@ export const Product: React.FC<ProductProps> = ({ list, from }) => {
                             height: `${position.height}px`,
                         }}
                     >
-                        <div className="itemBg">
-                            <img src={bg} alt="" className="itemBg_icon" />
-                        </div>
-                        <img src={icon} alt="" className="itemIcon" />
+                        {content}
 
                         <span
                             className="itemContent"
