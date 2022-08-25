@@ -1,15 +1,14 @@
-import "./font.scss";
-import "./style.scss";
-import "./elementsFromPointPolyfill.ts";
-import { Warehouse } from "./warehouse";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { StorageCabinet } from "./storageCabinet";
 import { Context, ValueChangeFnProps } from "./context";
-import { isMobile } from "./isMobile";
+import "./elementsFromPointPolyfill.ts";
+import "./font.scss";
+import { StorageCabinet } from "./storageCabinet";
+import "./style.scss";
+import { Warehouse } from "./warehouse";
 
-import { PluginComms, ConfigYML } from "@possie-engine/dr-plugin-sdk";
-import { hasStorageEl, OptionProps } from "./unit";
+import { ConfigYML, PluginComms } from "@possie-engine/dr-plugin-sdk";
 import Hr from "./hr";
+import { hasStorageEl, OptionProps } from "./unit";
 
 export const comms = new PluginComms({
     defaultConfig: new ConfigYML(),
@@ -27,8 +26,6 @@ export const comms = new PluginComms({
 const Main: React.FC = () => {
     /* <------------------------------------ **** STATE START **** ------------------------------------ */
     /************* This section will include this component HOOK function *************/
-
-    const [mobileStatus, setMobileStatus] = useState(isMobile);
 
     const moveCallBack = useRef<(x: number, y: number) => void>(() => undefined);
     const upCallBack = useRef<() => void>(() => undefined);
@@ -50,16 +47,6 @@ const Main: React.FC = () => {
     useEffect(() => {
         comms.state = selectedValue?.code ?? null;
     }, [selectedValue]);
-
-    useEffect(() => {
-        const fn = () => {
-            setMobileStatus(isMobile);
-        };
-        window.addEventListener("resize", fn);
-        return () => {
-            window.removeEventListener("resize", fn);
-        };
-    }, []);
 
     /* <------------------------------------ **** PARAMETER END **** ------------------------------------ */
     /* <------------------------------------ **** FUNCTION START **** ------------------------------------ */
@@ -98,7 +85,6 @@ const Main: React.FC = () => {
             </div>
             <Context.Provider
                 value={{
-                    isMobile: mobileStatus,
                     valueChangeCallback,
                     upCallBack,
                     moveCallBack,

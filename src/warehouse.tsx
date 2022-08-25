@@ -2,11 +2,10 @@
 /** This section will include all the necessary dependence for this tsx file */
 
 import React from "react";
-import { Product } from "./product";
-import { OptionProps } from "./unit";
-import { useMContext } from "./context";
-import { ScrollComponent } from "./Scroll";
 import Frame from "./frame";
+import { Product } from "./product";
+import { ScrollComponent } from "./Scroll";
+import { OptionProps } from "./unit";
 /* <------------------------------------ **** DEPENDENCE IMPORT END **** ------------------------------------ */
 /* <------------------------------------ **** INTERFACE START **** ------------------------------------ */
 
@@ -18,8 +17,6 @@ export interface WarehouseProps {
 /* <------------------------------------ **** INTERFACE END **** ------------------------------------ */
 /* <------------------------------------ **** FUNCTION COMPONENT START **** ------------------------------------ */
 export const Warehouse: React.FC<WarehouseProps> = ({ list }) => {
-    const { isMobile } = useMContext();
-
     const arr = list ?? [];
 
     const content = (
@@ -42,19 +39,15 @@ export const Warehouse: React.FC<WarehouseProps> = ({ list }) => {
             <div className="warehouse_container">
                 <Frame type="top" />
 
-                {isMobile ? (
-                    <div className="warehouse_items">{content}</div>
-                ) : (
-                    <ScrollComponent
-                        className="warehouse_scrollWrap"
-                        bodyClassName="warehouse_scrollBody"
-                        hidden={{
-                            x: true,
-                        }}
-                    >
-                        {content}
-                    </ScrollComponent>
-                )}
+                <ScrollComponent
+                    className="warehouse_scrollWrap"
+                    bodyClassName="warehouse_scrollBody"
+                    hidden={{
+                        x: true,
+                    }}
+                >
+                    {content}
+                </ScrollComponent>
             </div>
         </div>
     );

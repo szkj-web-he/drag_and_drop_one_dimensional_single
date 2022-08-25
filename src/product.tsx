@@ -21,7 +21,7 @@ export const Product: React.FC<ProductProps> = ({ list, from }) => {
     /* <------------------------------------ **** STATE START **** ------------------------------------ */
     /************* This section will include this component HOOK function *************/
 
-    const { isMobile, valueChangeCallback, moveCallBack, upCallBack } = useMContext();
+    const { valueChangeCallback, moveCallBack, upCallBack } = useMContext();
 
     const selectedFn = useRef<typeof document.onselectstart>(null);
 
@@ -42,6 +42,7 @@ export const Product: React.FC<ProductProps> = ({ list, from }) => {
 
     const [position, setPosition] = useState<PointProps>();
 
+    const touchStatus = useRef(false);
     /* <------------------------------------ **** STATE END **** ------------------------------------ */
     /* <------------------------------------ **** PARAMETER START **** ------------------------------------ */
     /************* This section will include this component parameter *************/
@@ -176,6 +177,7 @@ export const Product: React.FC<ProductProps> = ({ list, from }) => {
     //当手触摸时
     const handleTouchStart = (item: OptionProps, e: React.TouchEvent<HTMLDivElement>) => {
         const position = e.changedTouches[0];
+        touchStatus.current = true;
         e.stopPropagation();
         handleDown(item, e, {
             x: position.pageX,
@@ -191,19 +193,19 @@ export const Product: React.FC<ProductProps> = ({ list, from }) => {
                     <div
                         className={`item${selectItem?.code === item.code ? " gray" : ""}`}
                         key={item.code}
-                        {...(isMobile
-                            ? {
-                                  onTouchStart: (e) => {
-                                      handleTouchStart(item, e);
-                                  },
-                                  onTouchMove: handleMove,
-                                  onTouchEnd: handleTouchEnd,
-                              }
-                            : {
-                                  onMouseDown: (e) => {
-                                      handleMouseDown(item, e);
-                                  },
-                              })}
+                        onTouchStart={(e) => {
+                            handleTouchStart(item, e);
+                        }}
+                        onTouchMove={(e) => {
+                            if (!touchStatus.current) {
+                                return;
+                            }
+                            handleMove(e);
+                        }}
+                        onTouchEnd={handleTouchEnd}
+                        onMouseDown={(e) => {
+                            handleMouseDown(item, e);
+                        }}
                     >
                         {content}
 
@@ -229,7 +231,6 @@ export const Product: React.FC<ProductProps> = ({ list, from }) => {
                         }}
                     >
                         {content}
-
                         <span
                             className="itemContent"
                             dangerouslySetInnerHTML={{

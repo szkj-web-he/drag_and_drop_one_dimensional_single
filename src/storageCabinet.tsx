@@ -19,7 +19,7 @@ export const StorageCabinet: React.FC<WarehouseProps> = ({ list }) => {
     /* <------------------------------------ **** STATE START **** ------------------------------------ */
     /************* This section will include this component HOOK function *************/
 
-    const { isMobile, moveCallBack, upCallBack } = useMContext();
+    const { moveCallBack, upCallBack } = useMContext();
 
     const [active, setActive] = useState(false);
 
@@ -65,17 +65,13 @@ export const StorageCabinet: React.FC<WarehouseProps> = ({ list }) => {
             <div className="storageCabinet_top" />
 
             <div
-                className={`storageCabinet_container${isMobile ? " scrollBody" : ""}${
+                className={`storageCabinet_container${
                     active ? " storageCabinet_container__active" : ""
                 }`}
             >
-                {isMobile ? (
-                    content
-                ) : (
-                    <ScrollComponent bodyClassName="scrollBody" hidden={{ x: true }}>
-                        {content}
-                    </ScrollComponent>
-                )}
+                <ScrollComponent bodyClassName="scrollBody" hidden={{ x: true }}>
+                    {content}
+                </ScrollComponent>
             </div>
         </div>
     );
